@@ -32,7 +32,7 @@ const observer = new MutationObserver(function (mutations) {
     chrome.runtime.sendMessage({ text: "getActiveTabId" }, function (response) {
       const tabUrl: string = response?.tabId?.url;
 
-      console.log("Active tab URL is", tabUrl);
+      // console.log("Active tab URL is", tabUrl);
 
       // Define regex patterns for the URLs
       const validPatterns = [

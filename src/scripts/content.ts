@@ -32,16 +32,20 @@ const observer = new MutationObserver(function (mutations) {
     chrome.runtime.sendMessage({ text: "getActiveTabId" }, function (response) {
       const tabUrl: string = response?.tabId?.url;
 
-      //   console.log("Active tab URL is", tabUrl);
+      console.log("Active tab URL is", tabUrl);
 
-      // Check if the tab URL starts with "https://www.instagram.com/reels/"
-      if (
-        tabUrl &&
-        (tabUrl.startsWith("https://www.instagram.com/reels/") ||
-          tabUrl.startsWith("https://www.youtube.com/shorts/") ||
-          tabUrl.startsWith("https://www.instagram.com/reel/") ||
-          tabUrl.startsWith("https://instagram.com/p/"))
-      ) {
+      // Define regex patterns for the URLs
+      const validPatterns = [
+        /^https:\/\/(www\.)?instagram\.com\/reels\//,
+        /^https:\/\/(www\.)?youtube\.com\/shorts\//,
+        /^https:\/\/(www\.)?instagram\.com\/reel\//,
+        /^https:\/\/(www\.)?instagram\.com\/p\//,
+      ];
+
+      // Check if the tab URL matches any of the patterns
+      const isMatch = validPatterns.some((pattern) => pattern.test(tabUrl));
+
+      if (isMatch) {
         chrome.runtime.sendMessage({
           text: "navigate",
           url: "https://www.google.com",

@@ -7,21 +7,26 @@
     },
     "description": "removes shorts and reels from youtube and instagram respectively",
     "icons": {
-        "16": "vite.svg",
-        "32": "vite.svg",
-        "128": "vite.svg"
+        "16": "favicon-16x16.png"
     },
+    "permissions": [
+        "tabs"
+    ],
     "background": {
         "service_worker": "src/background/background.ts"
     },
     "content_scripts": [
         {
             "js": [
-                "src/scripts/content.tsx"
+                "src/scripts/content.ts"
             ],
             "matches": [
-                "<all_urls>"
-            ]
+                "https://www.youtube.com/*",
+                "https://youtube.com/*",
+                "https://www.instagram.com/*",
+                "https://instagram.com/*"
+            ],
+            "run_at": "document_end"
         }
     ]
 }
